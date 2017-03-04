@@ -578,7 +578,7 @@ else {
 
 /*--------------------------------------------
   write hlm3 command file;
-    (orig. for version 5.45q; works for hlm 7)
+    (orig. for version 5.45q; should work for hlm 7)
 --------------------------------------------*/
 
 file write `cmd' "#WHLM CMD FILE FOR $mdmfile" _newline

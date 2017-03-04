@@ -9,7 +9,7 @@ capture program drop hlmrun
 program define hlmrun, eclass
 ereturn clear
 
-version 8.2
+version 13
 	syntax anything (id="hlm cmdfile" name=filename) ///
 	[, hlm2 hlm3 noView MDM(string) STore(string) ROBUST]
 
