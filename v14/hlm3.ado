@@ -3,7 +3,7 @@
 
 /*----------------------------------------------------
   this program writes an hlm3 command file.
-  it requires stata 8.2 or higher, and hlm v.6
+  it requires stata 13 or higher, and hlm v7
 ----------------------------------------------------*/
 
 capture program drop hlm3

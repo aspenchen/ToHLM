@@ -74,8 +74,12 @@ if "`nodta'"=="" {
 	   		di in ye "Varname `var' > 8 characters: dropped from `using'.dta"
 		}
 	}
-  if
-	version 13: saveold `using'.dta, `replace'
+  if `c(version)'>=13 & `c(version)'<14 {
+	  saveold `using'.dta, `replace'
+  }
+  else {
+		  saveold `using'.dta, `replace' version(11)
+  }
 }
 else {
 	local d = 1
@@ -88,7 +92,12 @@ else {
 		local varlngth : length local var
 		if `varlngth' > 8  drop `var'
 	}
-	version 13: quietly saveold `using'`d'.dta // altered
+	if `c(version)'>=13 & `c(version)'<14 {
+	   quietly saveold `using'`d'.dta
+	 }
+   else {
+	   quietly saveold `using'`d'.dta, version(11)
+   }
 }
 restore
 
@@ -156,7 +165,12 @@ qui keep `id2' `l1' `l2'
 qui keep in 1
 qui drop in 1/1
 order `id2' `l1' `l2'
-version 13: quietly saveold `using'_mdmvars.dta, `replace' // altered
+if `c(version)'>=13 & `c(version)'<14 {
+  quietly saveold `using'_mdmvars.dta, `replace'
+}
+else {
+  quietly saveold `using'_mdmvars.dta, `replace' version(11)
+}
 restore
 
 

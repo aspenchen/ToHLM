@@ -75,7 +75,12 @@ if "`nodta'"=="" {
 		}
 	}
 	quietly sort `id3' `id2'
-	version 13: saveold `using'.dta, `replace'
+  if `c(version)'>=13 & `c(version)'<14 {
+	  saveold `using'.dta, `replace'
+  }
+  else {
+		saveold `using'.dta, `replace' version(11)
+	}
 }
 else {
 	local d = 1
@@ -88,7 +93,12 @@ else {
 		local varlngth : length local var
 		if `varlngth' > 8  drop `var'
 	}
-	version 13: quietly saveold `using'`d'.dta
+  if `c(version)'>=13 & `c(version)'<14 {
+	  quietly saveold `using'`d'.dta
+	}
+  else {
+	  quitely saveold `using'`d'.dta, version(11)
+  }
 }
 restore
 
@@ -166,7 +176,12 @@ qui keep `id3' `id2' `l1' `l2' `l3'
 qui keep in 1
 qui drop in 1/1
 order `id3' `id2' `l1' `l2' `l3'
-version 13: quietly saveold `using'_mdmvars.dta, `replace'
+if `c(version)'>=13 & `c(version)'<14 {
+  quietly saveold `using'_mdmvars.dta, `replace'
+}
+else {
+	quietly saveold `using'_mdmvars.dta, replace' version(11)
+}
 restore
 
 
