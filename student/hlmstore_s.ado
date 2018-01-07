@@ -1,4 +1,5 @@
-***--- Updated stata package for hlm 7 student version: pac 04MAR17
+*! updates; pac-07JAN2018
+*! updated stata package for hlm 7 student version: pac 04MAR17
 /*------------------------------------------
 this program returns estimated parmaters
 from an HLM output file.

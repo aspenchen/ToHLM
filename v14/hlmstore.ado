@@ -1,3 +1,4 @@
+*! updates; pac-07JAN2018
 *! updated for Stata14/HLM7; pac-03MAR2017
 /*------------------------------------------
 this program returns estimated parmaters

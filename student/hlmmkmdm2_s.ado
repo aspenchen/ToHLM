@@ -1,4 +1,5 @@
-***--- Updated stata package for hlm 7 student version: pac 04MAR17
+*! updates; pac-07JAN2018
+*! updated stata package for hlm 7 student version: pac 04MAR17
 *! version 2.0, sean f. reardon, 30dec2005
 
 /****************************************************
@@ -96,7 +97,7 @@ else {
 		if `varlngth' > 8  drop `var'
 	}
   if floor(c(version))<=12 {
-	  quitely save `using'`d'.dta
+	  quietly save `using'`d'.dta
   }
   else if floor(c(version))==13 {
 	  quietly saveold `using'`d'.dta
@@ -174,7 +175,7 @@ order `id2' `l1' `l2'
 if floor(c(version))<=12 {
 	quietly save `using'_mdmvars.dta, `replace'
 }
-else if {
+else if  floor(c(version))==13 {
 	quietly saveold `using'_mdmvars.dta, `replace'
 }
 else {

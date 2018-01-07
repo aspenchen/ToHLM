@@ -1,4 +1,5 @@
-***--- Updated stata package for hlm 7 student version: pac 04MAR17
+*! updates; pac-07JAN2018
+*! updated stata package for hlm 7 student version: pac 04MAR17
 *! version 2.0, sean f. reardon, 30dec2005
 
 /****************************************************
@@ -81,7 +82,7 @@ foreach var of local l1 {
 foreach var of local l2 {
 	if "`var'" ~= "`id2'" & "`var'" ~= "`id3'" {
 		local vartype : type `var'
-		local test = strpost("`vartype'", "str") // updated from index()
+		local test = strpos("`vartype'", "str") // updated from index()
 		if `test' == 0 local l2list `l2list' `var'
 		else display in red "String variable `var' has been dropped."
 	}

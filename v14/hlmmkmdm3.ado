@@ -1,3 +1,4 @@
+*! updates; pac-07JAN2018
 *! updated for Stata14/HLM7; pac-03MAR2017
 *! version 2.0, sean f. reardon, 30dec2005
 
@@ -75,11 +76,14 @@ if "`nodta'"=="" {
 		}
 	}
 	quietly sort `id3' `id2'
-  if `c(version)'>=13 & `c(version)'<14 {
+  if floor(c(version))<=12 {
+      save `using'.dta, `replace'
+  }
+  else if floor(c(version))==13 {
 	  saveold `using'.dta, `replace'
   }
   else {
-		saveold `using'.dta, `replace' version(11)
+	  saveold `using'.dta, `replace' version(11)
 	}
 }
 else {
@@ -93,11 +97,14 @@ else {
 		local varlngth : length local var
 		if `varlngth' > 8  drop `var'
 	}
-  if `c(version)'>=13 & `c(version)'<14 {
-	  quietly saveold `using'`d'.dta
+  if floor(c(version))<=12 {
+	  quietly save `using'`d'.dta, `replace'
+  }
+  else if floor(c(version))==13 {
+	  quietly saveold `using'`d'.dta, `replace'
 	}
   else {
-	  quitely saveold `using'`d'.dta, version(11)
+	  quietly saveold `using'`d'.dta, `replace' version(11)
   }
 }
 restore
@@ -167,7 +174,6 @@ foreach var of local l3 {
 }
 file write `mdmt' "*end l3vars" _newline
 
-
 capture file close `mdmt'
 
 *the following makes a small file to save the variable names used in the mdm file
@@ -176,11 +182,14 @@ qui keep `id3' `id2' `l1' `l2' `l3'
 qui keep in 1
 qui drop in 1/1
 order `id3' `id2' `l1' `l2' `l3'
-if `c(version)'>=13 & `c(version)'<14 {
-  quietly saveold `using'_mdmvars.dta, `replace'
+if floor(c(version))<=12 {
+    quietly save `using'_mdmvars.dta, `replace'
+}
+else if floor(c(version))==13 {
+    quietly saveold `using'_mdmvars.dta, `replace'
 }
 else {
-	quietly saveold `using'_mdmvars.dta, replace' version(11)
+	quietly saveold `using'_mdmvars.dta, `replace' version(11)
 }
 restore
 
@@ -220,5 +229,4 @@ if "`run'"~="norun" {
 	  	display in green "HLM .sts file `using'.sts saved."
 	}
 }
-
 end

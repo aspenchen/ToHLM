@@ -1,3 +1,4 @@
+*! updates; pac-07JAN2018
 *! updated for Stata14/HLM7; pac-03MAR2017
 /*----------------------------------------------------
   this program parses the test option
@@ -7,7 +8,7 @@
 capture program drop hlmtest
 program define hlmtest
 version 13
-	local test "`0'"
+local test "`0'"
 
 local test:subinstr local test " " "", all
 local test:subinstr local test "][" " ", all
@@ -152,5 +153,4 @@ while "`vars`g'c1t1'" ~= "" {
 	}
 	local g = `g' + 1
 }
-
 end

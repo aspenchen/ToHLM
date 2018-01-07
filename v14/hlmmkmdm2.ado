@@ -1,3 +1,4 @@
+*! updates; pac-07JAN2018
 *! updated for Stata14/HLM7; pac-03MAR2017
 *! version 2.0, sean f. reardon, 30dec2005
 
@@ -74,11 +75,14 @@ if "`nodta'"=="" {
 	   		di in ye "Varname `var' > 8 characters: dropped from `using'.dta"
 		}
 	}
-  if `c(version)'>=13 & `c(version)'<14 {
+  if floor(c(version))<=12 {
+	  save `using'.dta, `replace'
+  }
+  else if floor(c(version))==13 {
 	  saveold `using'.dta, `replace'
   }
   else {
-		  saveold `using'.dta, `replace' version(11)
+	  saveold `using'.dta, `replace' version(11)
   }
 }
 else {
@@ -92,12 +96,15 @@ else {
 		local varlngth : length local var
 		if `varlngth' > 8  drop `var'
 	}
-	if `c(version)'>=13 & `c(version)'<14 {
-	   quietly saveold `using'`d'.dta
-	 }
-   else {
-	   quietly saveold `using'`d'.dta, version(11)
-   }
+  if floor(c(version))<=12 {
+	  quietly save `using'`d'.dta
+  }
+  else if floor(c(version))==13 {
+	  quietly saveold `using'`d'.dta
+  }
+  else {
+	  quietly saveold `using'`d'.dta, version(11)
+  }
 }
 restore
 
@@ -165,14 +172,16 @@ qui keep `id2' `l1' `l2'
 qui keep in 1
 qui drop in 1/1
 order `id2' `l1' `l2'
-if `c(version)'>=13 & `c(version)'<14 {
-  quietly saveold `using'_mdmvars.dta, `replace'
+if floor(c(version))<=12 {
+	quietly save `using'_mdmvars.dta, `replace'
+}
+else if floor(c(version))==13 {
+    quietly saveold `using'_mdmvars.dta, `replace'
 }
 else {
-  quietly saveold `using'_mdmvars.dta, `replace' version(11)
+    quietly saveold `using'_mdmvars.dta, `replace' version(11)
 }
 restore
-
 
 /****************************************
   invoke HLM to create MDM file and then
@@ -209,5 +218,4 @@ if "`run'"~="norun" {
 	  	display in green "HLM .sts file `using'.sts saved."
 	}
 }
-
 end

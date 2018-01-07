@@ -1,3 +1,4 @@
+*! updates; pac-07JAN2018
 *! updated for Stata14/HLM7; pac-03MAR2017
 *! version 2.0, sean f. reardon, 30dec2005
 
@@ -68,7 +69,7 @@ if r(N)==0 {
 foreach var of local l1 {
 	if "`var'" ~= "`id2'" & "`var'" ~= "`id3'" {
 		local vartype : type `var'
-		local test = index("`vartype'", "str") // strpos() instead of index()
+		local test = strpos("`vartype'", "str")
 		if `test' == 0 local l1list `l1list' `var'
 		else display in red "String variable `var' has been dropped."
 	}
@@ -81,7 +82,7 @@ foreach var of local l1 {
 foreach var of local l2 {
 	if "`var'" ~= "`id2'" & "`var'" ~= "`id3'" {
 		local vartype : type `var'
-		local test = index("`vartype'", "str") // strpos() instead of index()
+		local test = strpos("`vartype'", "str")
 		if `test' == 0 local l2list `l2list' `var'
 		else display in red "String variable `var' has been dropped."
 	}
@@ -95,7 +96,7 @@ if upper("`type'") == "HLM3" | upper("`type'") == "HMLM3" {
 	foreach var of local l3 {
 		if "`var'" ~= "`id2'" & "`var'" ~= "`id3'" {
 			local vartype : type `var'
- 			local test = index("`vartype'", "str") // strpos() instead of index()
+ 			local test = strpos("`vartype'", "str")
  			if `test' == 0 local l3list `l3list' `var'
 			else display in red "String variable `var' has been dropped."
 		}
@@ -131,7 +132,7 @@ foreach var of local allvars {
 // miss option specifies when to delete missing cases
 if "`miss'"=="" {
 	local vartype : type `id2'
-	local test = index("`vartype'", "str")
+	local test = strpos("`vartype'", "str")
 	if `test' ~= 0 {
 		quietly count if `id2'==""
 		if r(N)>0 {
@@ -142,7 +143,7 @@ if "`miss'"=="" {
 	else local i2 `id2'
 	if "`id3'"~="" {
 		local vartype : type `id3'
-		local test = index("`vartype'", "str")
+		local test = strpos("`vartype'", "str")
 		if `test' ~= 0 {
 			quietly count if `id3'==""
 			if r(N)>0 {
